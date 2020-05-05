@@ -11,30 +11,65 @@ $("#find-tree").on("click", function (event) {
 
   // Here we construct our URL
   //var queryURL = "https://www.omdbapi.com/?t=" + movie + "&apikey=trilogy";
-
   //7xlv8Rb7mNjHo2IqanbpW1vEfnrEMOmW ----------giphy API key
-  //javascript, jQuery
-
-  var queryURL = `http://api.giphy.com/v1/gifs/search?q=${tree}&api_key=7xlv8Rb7mNjHo2IqanbpW1vEfnrEMOmW&limit=10`;
+  var queryURL = `https://api.giphy.com/v1/gifs/search?q=${tree}&api_key=7xlv8Rb7mNjHo2IqanbpW1vEfnrEMOmW&limit=10`;
   //xhr.done(function (data) {
   // console.log("success got data", data);
-  //
   // Write code between the dashes below to hit the queryURL with $ajax, then take the response data
   // and display it in the div with an id of movie-view
-
   $.ajax({
     url: queryURL,
     method: "GET",
-  }).then(function (response) {
+  })
+  
+  .then(function (response) {
     // $("#buttons-view").empty();
     console.log(response.data);
     var giphyResponse = response.data;
-    // Looping through the array of movies
+
+    // Looping through the array of trees
     for (var i = 0; i < giphyResponse.length; i++) {
       console.log(giphyResponse[i].url);
-      var giphyImage = $("<img>").attr("src", giphyResponse[i].url);
-      //$("#picture-box").empty();
-      $("#picture-box").append(giphyImage);
+
+      if (giphyResponse[i].rating !== "r" && giphyResponse[i].rating !== "pg-13") {
+        // Creating a div for the gif
+        var gifDiv = $("<div>");
+
+        // Storing the result item's rating
+        var rating = giphyResponse[i].rating;
+
+        // Creating a paragraph tag with the result item's rating
+        var p = $("<p>").text("Rating: " + rating);
+
+        // Creating an image tag
+        var personImage = $("<img>");
+
+        var giphyImage = $("<img>").attr("src", giphyResponse[i].url);
+        //$("#picture-box").empty();
+        $("#picture-box").append(giphyImage);
+
+
+        // Giving the image tag an src attribute of a proprty pulled off the
+        // result item
+        personImage.attr("src", giphyResponse[i].images.fixed_height.url);
+
+        // Appending the paragraph and personImage we created to the "gifDiv" div we created
+        gifDiv.append(p);
+        gifDiv.append(personImage);
+
+        // Prepending the gifDiv to the "#gifs-appear-here" div in the HTML
+        $("#gifs-appear-here").prepend(gifDiv);
+      }
+
+
+
+
+
+
+    
+
+
+
 
       //Then dynamicaly generating buttons for each movie in the array.
       // This code $("<button>") is all jQuery needs to create the start and end tag. (<button></button>)
@@ -50,15 +85,11 @@ $("#find-tree").on("click", function (event) {
   });
 });
 
-//$("#buttons-view").empty();
-
-// Looping through the array of movies
-//for (var i = 0; i < response.length; i++) {
-//
 
 // -----------------------------------------------------------------------
 
 //Your app should take the topics in this array and create buttons in your HTML. Try using a loop that appends a button for each string in the array.
+
 //When the user clicks on a button, the page should grab 10 static, non-animated gif images from the GIPHY API and place them on the page.
 
 //When the user clicks one of the still GIPHY images, the gif should animate. If the user clicks the gif again, it should stop playing.
