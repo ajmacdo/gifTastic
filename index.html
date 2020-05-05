@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Trees I guess maybe a better idea later or not</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Tree Search</h1>
+
+      <!-- This form will be where users input data about the trees -->
+      <form id="tree-form">
+        <label for="tree-input">Search for a tree</label>
+        <input type="text" id="tree-input" /><br />
+
+        <!-- This button will trigger our AJAX call -->
+        <input id="find-tree" type="submit" value="Tree Search" />
+      </form>
+
+      <!-- We'll be dumping our JSON contents in here -->
+      <div id="picture-box"></div>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script src="giphyApp.js"></script>
+    </div>
+  </body>
+</html>
